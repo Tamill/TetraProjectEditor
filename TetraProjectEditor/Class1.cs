@@ -17,7 +17,7 @@ namespace TetraProjectEditor
         static public Color CFore = Color.White;
         static public Color CBack = Color.FromArgb(255, 30, 30, 30);
         static public string appName = "Tetra Project 数据";
-        static public string path_AppData = Application.StartupPath + "\\TetraProjectEditorResources";
+        static public string path_AppData = Application.StartupPath + "";
         static public FolderBrowserDialog dialog;
         static public OpenFileDialog dialogfile;
         static public string path_FileSelection;

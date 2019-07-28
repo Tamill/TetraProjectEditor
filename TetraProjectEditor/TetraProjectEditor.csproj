@@ -117,8 +117,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="TetraProjectEditorResources\EditorHighlighting.xshd" />
-    <None Include="TetraProjectEditorResources\help.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -134,10 +132,8 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="TetraProjectEditorResources\guidance.txt" />
-    <Content Include="TetraProjectEditorResources\icon.png" />
-    <Content Include="TetraProjectEditorResources\user.xml" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>copy $(ProjectDir)TetraProjectEditorResources\* $(ProjectDir)$(OutDir)</PreBuildEvent>
+  </PropertyGroup>
 </Project>
