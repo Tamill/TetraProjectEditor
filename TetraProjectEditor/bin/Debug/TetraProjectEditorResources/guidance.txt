@@ -1,0 +1,440 @@
+卡牌的ID[text]
+卡牌 id 相当于是卡牌的身份确认，在整个游戏中必须唯一存在。
+以后的卡牌间互相联动调用也离不开卡牌的 id。
+[text]
+{user}\CardArt[text]
+id[text]
+例如：
+id
+255
+6239
+2430240
+25961162
+SCP_173_C_1
+LISA_C_1
+HELLO_WORLD
+HELLOWORLD
+[guidance]
+
+
+
+
+卡牌的显示名称[text]
+卡牌 displayName 是卡牌的名字，会显示在游戏中。
+好的名字一定要既切合卡牌功能，又足够帅气。
+[text]
+{user}/CardArt[text]
+displayName[text]
+例如：
+拳击
+包扎
+治疗
+利器攻击
+子弹发射器
+电击外套
+肾上腺素
+羁绊
+威慑
+蓄力攻击
+出血
+原石寄生虫
+着火
+燃烧子弹
+静电
+麻痹
+冰冻
+制冷
+电击
+半成品再生药
+求生本能
+衰弱
+火焰喷射器
+助燃
+燃烧炸弹
+护盾
+护盾生成器
+重机枪
+高速再生
+孤注一掷
+手雷
+亢奋
+撕咬
+吸血
+狂暴
+[guidance]
+
+
+
+
+卡牌的价格[text]
+卡牌 price 是卡牌的价格，即原石加工器里购买到这张卡牌的价格。
+合理设定卡牌价格，强力卡牌太便宜的话会影响平衡性。
+[text]
+{user}\CardArt[text]
+price[text]
+例如：
+10
+5
+1
+[guidance]
+
+
+
+
+卡牌的能量消耗[text]
+卡牌 energy 是使用卡牌是消耗的能量。
+合理设定卡牌能量，强力卡牌能量消耗太低的话会影响平衡性。
+[text]
+{user}\CardArt[text]
+energyReq[text]
+例如：
+0
+1
+2
+[guidance]
+
+
+
+
+卡牌的射程[text]
+卡牌 range 是卡牌的射程。
+合理设定卡牌能射程，近战远程分明。
+[text]
+{user}\CardArt[text]
+range[text]
+例如：
+0
+1
+1.5
+2
+3
+4
+[guidance]
+
+
+卡牌扩散范围[text]
+卡牌 spreadRadius 是卡牌的扩散范围。
+范围为 0 则为对单体卡牌；
+范围大于 0 则为 aoe 卡牌。
+[text]
+{user}\CardArt[text]
+spreadRadius[text]
+例如：
+0
+1
+1.5
+2
+3
+4
+[guidance]
+
+
+
+卡牌的瞄准类型[text]
+卡牌的瞄准类型。可以对卡牌的目标进行限制。
+[text]
+{user}\CardArt[text]
+aimTypeCode[text]
+例如：
+保持空（所有都可以瞄准）
+•SingleOnly 仅可瞄准实体对象（各种角色）
+•NotAllowSlef 不能瞄准自己
+•ThroughWall 穿墙，作用于所有
+•EnvOnly 仅可瞄准环境（地板）
+•ChaTagLimit: 仅可瞄准指定 tagCode 的角色
+[guidance]
+
+
+
+卡牌的首选目标[text]
+卡牌的首选目标，这会影响 AI 的运作。
+[text]
+{user}\CardArt[text]
+perferredTargetTypeCode[text]
+例如：
+保持空
+•vis 可见的
+•visible 可见的
+•player 玩家可控制的
+•self 自己
+•emy 敌人
+•enemy 敌人
+•tmt 队友
+•teammate 队友
+•team 包括自己在内的整个队伍
+•lowHpP 低血量目标
+•lowestHpPercent 低血量目标
+•lowStaP 低体力目标
+•lowestStaminaPercent 低体力目标
+•died 已经死亡的目标
+•liv 还活着的目标
+•living 还活着的目标
+•cls 最近的目标
+•closest 最近的目标
+•rnd 随机目标
+•random 随即目标
+[guidance]
+
+
+
+卡牌的标记代码[text]
+卡牌的 tagCode 决定了卡牌的类型，类型选错可能会造成意想不到的错误。
+[text]
+{user}\CardArt[text]
+tagCode[text]
+例如：
+保持空
+•Equipment 装备
+•PosiBuff 好buff
+•Debuff 坏buff
+•Bullet 特殊卡牌：子弹牌
+•Craft 特殊卡牌：合成牌
+•Food 特殊卡牌：食物牌
+[guidance]
+
+
+卡牌的描述[text]
+用于写卡牌的描述。
+如果对自动生成的卡牌描述不满意，可在此格重写。
+如果此格留空的话，卡牌描述会由游戏自动生成。
+[text]
+{user}\CardArt[text]
+description[text]
+例如：
+1、用半角分号 ; 来换行。
+2、{ylw:} 可以使文字变为黄色。
+3、{credit:} 可以使文字变为卡片底部灰色小字。
+重写普通攻击的卡牌描述。
+修改 id 为 1 的普通攻击的 description 的表头列为：
+我这一拳头下去你就要少{ylw:3}点HP;{credit:其实拳头也会痛啦}
+[guidance]
+
+
+卡牌的指令[text]
+卡牌的指令，是卡牌的核心部分
+[text]
+{user}\CardArt[text]
+code[text]
+例如：
+详细的指令使用可参考 原石计划code文档。
+1、用半角分号 ; 来分隔不同指令。
+2、指令需要用 { } 来包住，但如果是最外层指令，则可以省略大括号。
+3、指令格式为 {指令:参数} 或者 {指令组:参数}。
+
+官方自带代码（未来提供注释)：
+tgt.TakeDamage:3;
+RemoveAllDebuffs:1;Heal:1
+Heal:5;RemoveAllDebuffs:1;Consumable:
+TakeDamage:1;AddBuff:14,2
+user.UseAllBulletCards:
+evt.PreTakeDamage:{SenderCardHasTag:Elec}{CreaserAvoidNext:TakeDamage};ImmuneBuff:235;evt.TakeDamage:{atker.AddBuff:235,3};Equipment:
+evt.StartTurn:{If:$hpP<=20%,{IncreaseStamina:5};};Consumable:
+evt.Heal:{If:ApplierIsTeammate:}{IncreaseEnergy:1};Equipment:
+TakeDamage:1;AddBuff:20,1
+TakeDamage:{*:4,{user.HandCardCount:1}};user.DiscardAllHandCardsById:1
+evt.UseCard:{DecreaseHp:1};DecayBuffByPercent:50%
+evt.UseCard:{tgt.TakeDamage:1;user.Heal:1}
+evt.StartTurn:{DecreaseHp:1;};DecayBuffByPercent:50%
+tgt.TakeDamage:2;tgt.AddBuff:17,1
+tgt.TakeDamage:1;tgt.AddBuff:20,1
+evt.PreApplyDamage:{CreaserAvoidNext:ApplyDamage};evt.EndTurn:{RemoveThisBuff:}
+evt.StartTurn:{DecreaseEnergy:1;DecreaseStamina:1};evt.TakeDamage:{RemoveThisBuff:99}
+tgt.AddBuff:23,1
+tgt.TakeDamage:1;tgt.AddBuff:20,1;
+evt.StartTurn:{user.Chance:50%{Heal:2};Else:{DecreaseHp:1}};Consumable:
+evt.EndTurn:{If:$hpP<=30%{Heal:5}};Consumable:
+evt.StartTurn:{DecreaseEnergy:1};DecayBuffByPercent:50%
+Repeat:3{TakeDamage:1;AddBuff:17,1}
+MultiplyBuffCountBy:17,1.5
+tgt.TakeDamage:5;AddBuff:17,2
+ApplyShield:
+AddBuff:34,2;OneOffCard:
+Repeat:6{tgt.TakeDamage:1}
+AddThisAgedBuff:3{Repeat:2{Heal:1}};Consumable:
+user.Chance:50%{tgt.TakeDamage:8};Else:{user.TakeDamage:2}
+TakeDamage:8
+evt.UseCard:{IncreaseEnergy:2;If:$egyP>=100%{DecreaseHp:1}};evt.EndTurn:{RemoveThisBuff:1}
+tgt.TakeDamage:6;If:{$tgt.hp<=0}{user.DrawCardOrCreate:44;user.IncreaseEnergy:1};Consumable:
+user.Heal:5;user.AddBuff:48,1;If:{tgt.HasBuff:14}{user.Heal:{*:$maxHp-$hp,20%}}
+evt.StartTurn:{IfNotHandCardFull:}{DrawCardOrCreate:44};evt.EndTurn:{AddBuff:48,1};Consumable:
+evt.UseCard:{SprdTakeDamage:1.5,1};BuffOverdrive:5,{user.DecreaseHalfHp:}
+evt.PreEndTurn:{Heal:{HandCardCount:};};OneOffCard:
+IncreaseMaxHpForever:5;OneOffCard:;DrawThisCardOnStartCombat:
+IncreaseApplyBuffCount:17,1;Equipment:
+RemoveBuff:48,99;
+Revive:;Heal:4;RemoveAllDebuffs:99;OneOffCard:
+tgt.TransferEnergyPFromUser:100%;tgt.TransferStaminaPFromUser:100%;
+tgt.TransferHpPFromUser:30%
+user.Heal:{tgt.BuffCount:17};user.AddBuff:83,1
+ConvertHpPToEgyAndSta:30%,3,5
+tgt.TakeDamage:3
+tgt.TakeDamage:{*:{BuffCount:17},2};
+DecreaseDecreaseHpValue:5;evt.EndTurn:{RemoveThisBuff:}
+TakeRepelFromSelPos:2;
+tgt.TakeRepel:2;tgt.TakeDamage:{$hp*10%}
+AgedBuff:5,{buffHost.TakeDragFromUser:};Consumable:
+OneOffCard:;SelectCardToDestroyForever:1;DrawThisCardOnStartCombat:
+tgt.TakeDragFromUser:
+CreateNeutralChaAt:17,$selPos;Consumable:
+DrawThisCardOnStartCombat:;SelectDeckCardToDraw:1;Consumable:
+AddBuff:41,1;Consumable:
+user.DashToSelPos:;tgt.TakeDamage:{BuffCount:17}
+CountdownRun:2{Explode:1,10};DisallowAddThisBuffAgain:
+BlackholeGravity:;Invincible:;DieAfterTurnCount:2
+tgt.SwapPositionWith:$user
+evt.Die:{Vfx:6;Sprd:1.5{MultiplyBuffCountBy:17,2;TakeDamage:5;}};
+CreateCha:19,$selPos;
+TakeDamage:2;AddBuff:83,1;
+evt.EndTurn:{DecreaseHp:1}
+Heal:10;
+tgt.TakePullForceFromUser:
+CreateHandCards:60,3;
+AddBuff:103,5;
+SelectHandCardToDiscard:1;DrawCardOrCreate:117;
+SelectHandCardToDiscard:1;DrawCardOrCreate:90;
+Heal:2;IncreaseStamina:5;AddBuff:83,1;Consumable:
+ConvertHandCards:60,1,18,1;
+DiscardAllHandCardAndDrawSameCount:;IncreaseEnergy:1
+CreateTeammate:20,$userPosition;
+tgt.DiscardFirstHandCard:
+tgt.TakeDamage:2;tgt.AddBuff:83,1;
+tgt.TakeDamage:5;TakeDragFromUser:
+AddBuff:104,3;
+evt.StartTurn:{NearbyRemoveBuff:3,17,99};ImmuneAllBuffs:;
+AgedBuff:2{DecreaseStamina:3;DecreaseEnergy:2;TakeDamage:8};
+RemoveAllPosiBuffs:;
+AddBuffUntil:103,2,10{RemoveBuff:102,1}
+IncreaseApplyDamageValue:1;DecayBuff:1
+DecreaseTakeDamageValue:1;evt.TakeDamage:{SerialRun:{RemoveThisBuff:1}}
+Heal:2;
+KeepHandCardsOnEndTurn:;Equipment:
+evt.Die:{NearbyRemoveBuff:99,98,99};ImmuneAllBuffs:;
+evt.StartTurn:{DrawOneCard:};Equipment:
+IncreaseStamina:3
+ImmuneBuff:17;AgedBuff:3;
+IncreaseApplyHealValue:1
+SelfDestructSystem:10
+user.DashToSelPos:;tgt.TakeDamage:6
+IncreaseChanceValue:20%;Equipment:
+Heal:2;Consumable:
+MultiplyBuffCountBy:17,2
+Heal:1;DecreaseEnergy:10;DecreaseStamina:10
+evt.Die:{Revive:;Heal:{/:$maxHp,2};RemoveThisBuff:1;DestroyThisCardForever:;ShowUIMessageStrip:'自救包生效了'};Equipment:
+IncreaseEnergy:1;DrawOneCard:;
+user.GiveAllHandCardsByTagToSel:Bullet
+ConsumerByTag:Bullet;MultiplyApplyDamageAndBuffByTag:Bullet,5;evt.StartTurn:{DrawCardOrCreate:60;AddBuff:129,1};
+CreateTeammate:26,$selPos;Consumable:
+tgt.TakeDamage:5;tgt.AddBuff:17,3
+ConvertHandCards:18,1,125,1;
+ShopDiscount:0.4;Equipment:
+IncreaseEnergy:4
+evt.EndTurn:{RemoveThisBuff:999};evt.ApplyDamage:{SerialRun:{AddThisBuff:1}};MultiplyApplyDamageValue:0.75
+tgt.Repeat:$user.energy*3,{TakeDamage:1};user.DecreaseEnergy:$user.energy;OneOffCard:
+evt.ApplyDamage:{Chance:10%{receiver.AddBuff:83,1}};Consumable:
+user.CreateHandCardsByTagInDbRandom:Bullet,2
+tgt.TakeDamage:{user.GetBuffCountByTag:PosiBuff}
+PlotRunner:{SayMenu:"一台原石加工器，要使用吗？","确定|取消",{:{ShowUIShop:}} }
+PlotRunner:{SayFormat:"你发现了{ylw:0}原石。",$currentStageRewardMoney;IncreasePlayerMoneyInArchive:$currentStageRewardMoney;buffHost.Die:;}
+PlotRunner:{ShowUICardReward:{buffHost.Die:}}
+PlotRunner:{SayMenu:"要离开吗？","确定|取消"{:{LoadNextLevel:}} }
+tgt.SetToTeammateOf:$user;CountdownRun:2{SetToInitialTeam:};Consumable:
+IncreaseDamageByTag:Boxing,1;DecayBuff:1;MaxBuffCountLimit:4
+evt.TakeDamage:{atker.DecreaseHp:{buffHost.BuffCount:200}};evt.StartTurn:{RemoveThisBuff:}
+tgt.TakeDamage:2;user.AddBuff:200,1;
+If:$hpP<=30%{CreaserMultiplyNext:TakeDamage,3;};TakeDamage:4;user.AddBuff:200,1
+user.UseAllBoxingCards:
+DecreaseAllStamina:;AddBuff:200,2;AddBuff:201,1
+Heal:{+:2,BuffCount:200};RemoveBuff:200,999
+evt.UseCard:{And:{UsingCardHasTag:Bullet}{Chance:50%}}{IncreaseEnergy:1};Equipment:;
+evt.PreApplyDamage:{<:$stamina,1}{CreaserMultiplyNext:ApplyDamage,1.5};Equipment:
+evt.EndTurn:{If:$energy>=1}{AddBuff:104,2};Equipment:
+IncreaseApplyDamageValue:1;evt.EndTurn:{RemoveThisBuff:999}
+IncreaseApplyDamageValueByTag:Bullet{GetDistance:$user,$selPos};Equipment:
+user.DecreaseStamina:3;user.DashToSelPos:;tgt.TakeDamage:{*:50%,$user.maxHp}
+AddBuff:213,{-:$energy,1};user.DecreaseEnergy:$energy;evt.StartTurn:{ConvertBuff:213,1,210,1}
+evt.StartTurn:{DecreaseStamina:2};DecreaseTakeDamageValue:3;Equipment:
+evt.PreApplyDamage:{And:UsingCardHasTag:Bullet,$energy>=1}{CreaserMultiplyNext:ApplyDamage,3;DecreaseEnergy:$energy};Equipment:
+Repeat:$user.stamina{TakeDamage:2};user.DecreaseStamina:$stamina;user.AddBuff:200,1
+Heal:5;AddBuff:210,2;Consumable;
+Heal:5;AddBuff:225,4;Consumable;
+DecreaseTakeDamageValue:1;evt.EndTurn:{RemoveThisBuff:999}
+evt.StartTurn:{RemoveBuff:83,1};Equipment:
+evt.Die:{Sprd:5{TakePullForceFromUser:2}}
+evt.Die:{Sprd:1.5{AddBuff:83,2}}
+evt.PreTakeDamage:{$arg0>=$hp}{atker.DecreaseHp:$arg0}
+evt.StartTurn:{If:{<:{BuffCount:34},1}{AddBuff:34,1}}
+evt.TakeDamage:{AddBuff:232,1}
+IncreaseTakeDamageValue:1;evt.EndTurn:{RemoveThisBuff:999}
+ImmuneDamageAndBuffByChanceAndDistance:70%,2
+evt.EndTurn:{>=:$energy,1}{Sprd:1.5{If:{tgt.IsEnemyOf:$buffHost}{tgt.TakeDamage:$user.energy*5}};user.DecreaseEnergy:$energy};Equipment:
+evt.StartTurn:{>=:BuffCount:$cardId,10}{SerialRun:{If:{CharacterHasTag:$buffHost,Turret}{AddBuff:236,1};Else:{AddBuff:20,1};RemoveThisBuff:999}};DecayBuff:2
+evt.PreApplyDamage:{CreaserMultiplyNext:ApplyDamage,2};evt.EndTurn:{RemoveThisBuff:}
+tgt.TakeDamage:4;tgt.AddBuff:235,3
+Repeat:5{tgt.TakeDamage:0;tgt.DecreaseHp:1;tgt.AddBuff:235,1}
+IncreaseStamina:$energy;DecreaseEnergy:$energy
+tgt.TakeDamage:2;tgt.AddBuff:235,2;user.DrawOneCard:
+ConvertBuff:235,1,17,1
+Consumable:;tgt.TakeDamage:{*:10%,$tgt.hp};tgt.AddBuff:232,3
+evt.UseCard:{IncreaseMaxHp:1};evt.DecreaseHp:{SerialRun:{CreaserIncreaseNext:ApplyDamage,$user.maxHp*10%}};Equipment:
+user.DecreaseHp:{$maxHp*20%};tgt.TakeDamage:{$user.maxHp*40%};
+DecreaseHp:1;IncreaseMaxHp:10
+CreaserIncreaseNext:ApplyDamage,{-:$maxHp,$hp}
+AddBuff:248,$hp*50%;DecreaseHp:$hp*50%
+DecreaseTakeDamageValue:1;evt.PreTakeDamage:{SerialRun:{RemoveThisBuff:$arg0}}
+evt.PreTakeDamage:{SenderCardHasTag:Bullet}{CreaserAvoidNext:TakeDamage}
+Invincible:
+evt.StartTurn:{<:{BuffCount:34},3}{AddBuff:34,{-:3,BuffCount:34}}
+evt.PreApplyDamage:{<:{GetDistance:$user,$receiver},1.5}{CreaserIncreaseNext:ApplyDamage,2;Chance:50%{receiver.AddBuff:14,1}}
+tgt.TakeDamage:1;tgt.AddBuff:83,3;Consumable:
+SelectHandCardToDiscard:1;DrawCardOrCreate:272;
+If:HasBuff:83,{RemoveBuff:83,3;Heal:2};Else:{tgt.AddBuff:83,3};
+tgt.Heal:{*:{$maxHp-$hp},60%};AddBuff:83,5
+If:{HasBuff:14}{AddBuff:83,5};Else:{tgt.AddBuff:83,1}
+evt.StartTurn:{RemoveBuffByPercent:83,60%}
+evt.PreDecreaseHp:{CreaserAvoidNext:DecreaseHp};CountdownRun:9,{Die:}
+tgt.AddBuff:232,3
+[guidance]
+
+
+卡牌的背景图片[text]
+卡牌的背景图片 id。
+此 id 决定了这张卡牌使用哪个背景来显示。
+同时也影响了 buff 图标。
+此 id 对应目录为：
+游戏根目录\TetraProject_Data\StreamingAssets\Packages\Builtin\CardBackground
+[text]
+{user}\CardArt[text]
+backgroundId[text]
+例如：
+0 无
+1 白
+2 红
+3 绿
+4 黄
+5 蓝
+[guidance]
+
+使用卡牌时的特效[text]
+使用卡牌时的特效的 id。
+此 id 对应为 Effect 子列表 中的 id。
+[text]
+{user}\CardArt[text]
+effectCode[text]
+例如：
+详情可参考 Database 详解-Effect-id。
+1
+Buff:7
+[guidance]
+
+卡牌注释[text]
+此列为注释类信息，注释类信息不会被游戏读取。
+卡牌的注释。
+主要是写给开发者自己看的。
+[text]
+{user}\CardArt[text]
+//comment[text]
+例如：
+Hello world!
+[guidance]
+
+
