@@ -65,6 +65,7 @@ namespace TetraProjectEditor
                 StartFirstUsingSettings();
             }
             reoGridControl2.SheetTabWidth = 600;
+            IsCSVLoader = true;
             loadAll();
             
             //pictureBox3.Controls.Add(label5);
@@ -1209,7 +1210,9 @@ namespace TetraProjectEditor
                     ReoMain.Save(GetPath(path_CurrentPackage) + "\\Database\\database.xlsx", unvell.ReoGrid.IO.FileFormat.Excel2007);
                     foreach (var item in ReoMain.Worksheets)
                     {
-                        item.ExportAsCSV(GetPath(path_CurrentPackage) + "\\Database\\" + item.Name + ".csv");
+                        var destPos = GetPath(path_CurrentPackage) + "\\Database\\" + item.Name + ".csv";
+                        item.ExportAsCSV(destPos);
+                        File.WriteAllText(destPos, File.ReadAllText(destPos, Encoding.Default), Encoding.UTF8);
                     }
                 }
 
@@ -1349,9 +1352,9 @@ Game Development: Alive Game Studio
 
         private void 以CSV方式重载入ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IsCSVLoader = true;
-            loadAll();
             IsCSVLoader = false;
+            loadAll();
+            IsCSVLoader = true;
         }
 
         private void 常见异常ToolStripMenuItem_Click(object sender, EventArgs e)

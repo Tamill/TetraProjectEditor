@@ -108,7 +108,7 @@
             // 
             this.以CSV方式重载入ToolStripMenuItem.Name = "以CSV方式重载入ToolStripMenuItem";
             this.以CSV方式重载入ToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.以CSV方式重载入ToolStripMenuItem.Text = "以CSV方式重载入";
+            this.以CSV方式重载入ToolStripMenuItem.Text = "以XLS方式重载入";
             this.以CSV方式重载入ToolStripMenuItem.Click += new System.EventHandler(this.以CSV方式重载入ToolStripMenuItem_Click);
             // 
             // 打开资源包文件夹ToolStripMenuItem
@@ -176,21 +176,21 @@
             // 关于我们ToolStripMenuItem
             // 
             this.关于我们ToolStripMenuItem.Name = "关于我们ToolStripMenuItem";
-            this.关于我们ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.关于我们ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.关于我们ToolStripMenuItem.Text = "关于我们";
             this.关于我们ToolStripMenuItem.Click += new System.EventHandler(this.关于我们ToolStripMenuItem_Click_1);
             // 
             // 官方教程档案ToolStripMenuItem
             // 
             this.官方教程档案ToolStripMenuItem.Name = "官方教程档案ToolStripMenuItem";
-            this.官方教程档案ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.官方教程档案ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.官方教程档案ToolStripMenuItem.Text = "官方教程档案";
             this.官方教程档案ToolStripMenuItem.Click += new System.EventHandler(this.官方教程档案ToolStripMenuItem_Click);
             // 
             // 常见异常ToolStripMenuItem
             // 
             this.常见异常ToolStripMenuItem.Name = "常见异常ToolStripMenuItem";
-            this.常见异常ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.常见异常ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.常见异常ToolStripMenuItem.Text = "常见异常";
             this.常见异常ToolStripMenuItem.Click += new System.EventHandler(this.常见异常ToolStripMenuItem_Click);
             // 
