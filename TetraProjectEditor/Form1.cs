@@ -36,7 +36,7 @@ namespace TetraProjectEditor
         public string currentPackageName;
         public string currentPackageDesc;
         static public string appChineseName = "原石计划卡牌数据浏览器";
-        static public string loadOnlinePackageWarning = "当前资源包属于STEAM创意工坊资源包或官方资源包，不可修改。";
+        static public string loadOnlinePackageWarning = "提醒：当前资源包属于STEAM创意工坊资源包或官方资源包，请勿修改。";
         public ReoGridControl ReoMain;
         Cell Editing = null;
         public static Form1 main;
@@ -64,13 +64,13 @@ namespace TetraProjectEditor
             {
                 StartFirstUsingSettings();
             }
-            reoGridControl2.SheetTabWidth = 600;
-            IsCSVLoader = true;
+            reoGridControl2.SheetTabWidth = 700;
             loadAll();
-            
+
             //pictureBox3.Controls.Add(label5);
             //label5.Location = new Point(120, 270);
-            label5.BackColor = System.Drawing.Color.Transparent;
+            label5.ForeColor = EdLib.CBack;
+            label5.BackColor = EdLib.CFore; //System.Drawing.Color.Transparent;
             label5.FlatStyle = FlatStyle.Flat;
             label5.Font = new Font("黑体", 10, FontStyle.Regular);
             //pictureBox3.Controls.Add(pictureBox1);
@@ -83,7 +83,8 @@ namespace TetraProjectEditor
             //pictureBox1.Hide();
             pictureBox1.Controls.Add(label4);
             //label4.Location = new Point(10, 100);
-            label4.BackColor = System.Drawing.Color.Transparent;
+            label4.ForeColor = EdLib.CBack;
+            label4.BackColor = EdLib.CFore; //System.Drawing.Color.Transparent;
             label4.FlatStyle = FlatStyle.Flat;
             label4.TextAlign = ContentAlignment.TopCenter;
             label4.Font = new Font("黑体", 12, FontStyle.Regular);
@@ -91,27 +92,30 @@ namespace TetraProjectEditor
             //pictureBox3.Controls.Add(label6);
             label6.Text = "1";
             //label6.Location = new Point(97, 150);
-            label6.BackColor = System.Drawing.Color.Transparent;
+            label6.ForeColor = EdLib.CBack;
+            label6.BackColor = EdLib.CFore; //System.Drawing.Color.Transparent;
             label6.FlatStyle = FlatStyle.Flat;
             label6.Font = new Font("黑体", 18, FontStyle.Regular);
             label6.Height = 20;
             //pictureBox3.Controls.Add(label7);
             label7.Text = "1";
             //label7.Location = new Point(100, 180);
-            label7.BackColor = System.Drawing.Color.Transparent;
+            label7.ForeColor = EdLib.CBack;
+            label7.BackColor = EdLib.CFore; //System.Drawing.Color.Transparent;
             label7.FlatStyle = FlatStyle.Flat;
             label7.Font = new Font("黑体", 12, FontStyle.Regular);
             label7.ForeColor = Color.DarkGray;
             //pictureBox3.Controls.Add(label8);
             label8.Text = "1";
             //label8.Location = new Point(100, 200);
-            label8.BackColor = System.Drawing.Color.Transparent;
+            label8.ForeColor = EdLib.CBack;
+            label8.BackColor = EdLib.CFore; //System.Drawing.Color.Transparent;
             label8.FlatStyle = FlatStyle.Flat;
             label8.Font = new Font("黑体", 12, FontStyle.Regular);
             label8.ForeColor = Color.DarkRed;
             pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-
+            
 
         }
 
@@ -120,14 +124,17 @@ namespace TetraProjectEditor
         string lastPictureBG2 = "";
         string lastASE = "";
         string lastMainEdtiorText = "";
+        string editingCardId= "";
         private void Item_SelectionRangeChanged(object sender, unvell.ReoGrid.Events.RangeEventArgs e)
         {
             
 
             if (e == null) return;
             var cellLine = e.Range.StartPos.Row;
+            var cellCol = e.Range.StartPos.Col;
 
-            if(Editing != null)
+
+            if (Editing != null && !isAsonEdting)
             {
                 string local;
                 if (Editing.Data == null)
@@ -139,33 +146,62 @@ namespace TetraProjectEditor
                  mainEditor.Text = local;
             }
 
-            if (Editing != null  && !IsCurrentPackageSteamWorkshop)
+            if (Editing != null  && !IsCurrentPackageSteamWorkshop && !isAsonEdting)
             {
+                
                 reoGridControl2.CurrentWorksheet[Editing.Position] = GetClear(mainEditor.Text);
                 reoGridControl2.CurrentWorksheet.Cells[Editing.Position].Style.TextWrap = TextWrapMode.WordBreak;
-                reoGridControl2.CurrentWorksheet.AutoFitRowHeight(Editing.Position.Row, false);
-                reoGridControl2.CurrentWorksheet.SetRowsHeight(Editing.Position.Row, 1, 20);
                 mainEditor.Text = "";
-                Editing = null;
+                
             }
+            Editing = null;
+
             var nameSheet = reoGridControl2.CurrentWorksheet.Name;
+
+            if (cellLine < 0)
+                return;
+
+           
+
+            string name;
+            Object current;
+            if (cellCol >= 0)
+            {
+                current = reoGridControl2.CurrentWorksheet[cellLine, cellCol];
+                Editing = reoGridControl2.CurrentWorksheet.Cells[cellLine, cellCol];
+                if(!isAsonEdting)
+                {
+                    if (current != null)
+                    {
+                        OptimizeVision(current.ToString());
+                        lastMainEdtiorText = Editing.Data.ToString();
+
+                    }
+                    else
+                    {
+                        mainEditor.Text = "";
+                        lastMainEdtiorText = "";
+                    }
+
+                }
+
+
+            }
 
             for (int i = 0; i < 25; i++)
             {
                 if (reoGridControl2.CurrentWorksheet[0, i] == null) continue;
-                var name = reoGridControl2.CurrentWorksheet[0, i].ToString().ToLower();
-                var current = reoGridControl2.CurrentWorksheet[cellLine, i];
+                name = reoGridControl2.CurrentWorksheet[0, i].ToString().ToLower();
+                current = reoGridControl2.CurrentWorksheet[cellLine, i];
+                if (name == "id" && current != null)
+                    editingCardId = current.ToString().Trim();
 
-                if (cellLine == 0)
-                    return;
 
                 if (current == null)
                 {
-                    if ((nameSheet == "Card" && name == "code") ||( nameSheet == "Character" && name == "fieldcode"))
-                    {
-                        Editing = reoGridControl2.CurrentWorksheet.Cells[cellLine, i];
-                    }
-                   
+              
+
+
                     if (nameSheet == "Card")
                     {
                         switch (name)
@@ -190,9 +226,6 @@ namespace TetraProjectEditor
                             case "range":
                                 label7.Text = "0";
                                 break;
-                            case "code":
-                                mainEditor.Text = "";
-                                break;
                             case "spreadradius":
                                 label8.Text = "0";
                                 break;
@@ -212,9 +245,6 @@ namespace TetraProjectEditor
                     {
                         switch (name)
                         {
-                            case "fieldcode":
-                                mainEditor.Text = "";
-                                break;
                             case "id":
                                 if (EdLib.HasFile(EdLib.path_AppData + "\\icon.png") && lastASE != EdLib.path_AppData + "\\icon.png")
                                 {
@@ -229,17 +259,20 @@ namespace TetraProjectEditor
                     continue;
 
                 }
+
                 if (nameSheet == "Card")
                 {
                     switch (name)
                     {
                         case "id":
-                            var pos = Form1.GetPath(Form1.path_CurrentPackage) + "\\CardArt\\" + current.ToString().Trim() + ".png";
+                            
+                            var pos = Form1.GetPath(Form1.path_CurrentPackage) + "\\CardArt\\" + editingCardId  + ".png";
                             if (EdLib.HasFile(pos, false) && lastPicture != pos)
                             {
                                 lastPicture = pos;
                                 Image image = System.Drawing.Image.FromFile(pos);
                                 pictureBox1.Image = image;
+                                
                             }
                             else if (EdLib.HasFile(EdLib.path_AppData + "\\icon.png") && lastPicture != EdLib.path_AppData + "\\icon.png")
                             {
@@ -263,9 +296,7 @@ namespace TetraProjectEditor
                             break;
                         case "code":
 
-                            Editing = reoGridControl2.CurrentWorksheet.Cells[cellLine, i];
-                            OptimizeVision(current.ToString());
-                            lastMainEdtiorText = Editing.Data.ToString();
+
                             break;
                         case "spreadradius":
                             label8.Text = current.ToString().Trim();
@@ -324,10 +355,6 @@ namespace TetraProjectEditor
                             break;
                         case "fieldcode":
 
-                            Editing = reoGridControl2.CurrentWorksheet.Cells[cellLine, i];
-
-                            OptimizeVision(current.ToString());
-                            lastMainEdtiorText = Editing.Data.ToString();
 
                             break;
                         default:
@@ -349,46 +376,63 @@ namespace TetraProjectEditor
 
         }
 
+        void GetAndSetCurrentColInFact(Worksheet sheet)
+        {
+            for (int i = 0; i < sheet.ColumnCount && i < 36; i++)
+            {
+                if (sheet[0, i] == null)
+                {
+                    
+                    return;
+                }
+
+            }
+        }
+
         public void LoadCardSheet()
         {
             var sheet = reoGridControl2.CurrentWorksheet;
-            sheet.SetColumnsWidth(0, 1, 100);
-         
+            //sheet.SetColumnsWidth(0, 1, 100);
+            //GetAndSetCurrentColInFact(sheet);
+            sheet.ColumnCount = 36;
+
             for (int i = 0; i < sheet.ColumnCount; i++)
             {
    
                 if (sheet[0, i] == null) continue;
                 
                 var name = sheet[0, i].ToString().ToLower();
-               
                 if (name == "displayname")
                 {
-                    sheet.AutoFitColumnWidth(i, true);
+                    //sheet.AutoFitColumnWidth(i, true);
                 }
                
                 if (name == "id")
                 {
+                   
                     for (int d = 1; d < sheet.RowCount; d++)
                     {
-                        if (sheet[d, i] == null) continue;
-                        sheet.Cells[d, i].Style.HAlign = ReoGridHorAlign.Left;
+                        //if (sheet[d, i] == null) continue;
+
+
+                        sheet.Cells[d, i].Style.VAlign = ReoGridVerAlign.Top;                       //sheet.Cells[d, i].Style.HAlign = ReoGridHorAlign.Left;
                         sheet.AutoFitRowHeight(d, false);
-                        sheet.SetRowsHeight(d, 1, 20);
+                        //sheet.SetRowsHeight(d, 1, 20);
 
                     }
                 }
               
                 if (name == "code" || name == "description")
                 {
-                    sheet.SetColumnsWidth(i, sheet.RowCount, 250);
+                    //sheet.SetColumnsWidth(i, sheet.RowCount, 250);
 
                     for (int d = 1; d < sheet.RowCount; d++)
                     {
                         if (sheet[d, i] == null) continue;
                         sheet.Cells[d, i].Style.VAlign = ReoGridVerAlign.Top;
-                        sheet.Cells[d, i].Style.TextWrap = TextWrapMode.WordBreak;
+                        //sheet.Cells[d, i].Style.TextWrap = TextWrapMode.WordBreak;
                         sheet.AutoFitRowHeight(d, false);
-                        sheet.SetRowsHeight(d, 1, 20);
+                        //sheet.SetRowsHeight(d, 1, 20);
 
                     }
                     //sheet.AutoFitColumnWidth(i, true);
@@ -457,7 +501,7 @@ namespace TetraProjectEditor
                 //sheet.SetColumnsWidth(0, 1, 50);
                 IsCurrentPackageSteamWorkshop = false;
                 var pos = GetPath(path_CurrentPackage) + "\\Database\\";
-                if(path_CurrentPackage.Contains("steamapps"))
+                if(!EdLib.CanBeEdited(path_CurrentPackage))
                 {
                     IsCurrentPackageSteamWorkshop = true;
                 }
@@ -474,9 +518,13 @@ namespace TetraProjectEditor
                         {
                             ReoMain.Load(pos + "database.xlsx", unvell.ReoGrid.IO.FileFormat.Excel2007);
                         }
-                        else
+                        else if (EdLib.HasFile(pos + "database.xls"))
                         {
                             ReoMain.Load(pos + "database.xls", unvell.ReoGrid.IO.FileFormat.Excel2007);
+                        }
+                        else
+                        {
+                            LoadCSV(pos);
                         }
                        
                     }
@@ -502,16 +550,18 @@ namespace TetraProjectEditor
 
                 foreach (var item in reoGridControl2.Worksheets)
                 {
-                    
 
                     item.NameTextColor = EdLib.CFore;
-                    item.NameBackColor = EdLib.CBack;
+                    //item.NameBackColor = EdLib.CBack;
                     item.SelectionRangeChanged += Item_SelectionRangeChanged;
                     if (item.Name == "Card")
+                    {
                         ReoMain.CurrentWorksheet = item;
+                    }
                 }
                 
                 LoadSheet();
+              
                 return;
                 
             }
@@ -569,6 +619,13 @@ namespace TetraProjectEditor
             label8.Hide();
             Editing = null;
             mainEditor.Text = "";
+            if (reoGridControl2.CurrentWorksheet == null)
+            {
+                EdLib.AskMsg("该资源包不可用，不是可读的数据库。若为工具，请在文件夹中打开exe文件");
+                return;
+            }
+                
+
             switch (reoGridControl2.CurrentWorksheet.Name)
             {
                 case "Card":
@@ -600,7 +657,6 @@ namespace TetraProjectEditor
         {
             //code = @"evt.UseCard:{IncreaseMaxHp:1};evt.DecreaseHp:{SerialRun:{CreaserIncreaseNext:ApplyDamage,$user.maxHp*10%}};Equipment:";
             StringBuilder builder = new StringBuilder();
-            bool includingStr = false;
             char lastWord = ' ';
             string lastLine = "";
             int __index = 0;
@@ -608,12 +664,25 @@ namespace TetraProjectEditor
             int _index = 0;
             bool lastChangedNextLine = false;
             int IfIndex = 0;
+            bool OnString = false;
+      
             foreach (char word in code)
             {
-                if (word == '\n')
-                    continue;
-                if (word == ' ')
-                    continue;
+
+                if (word == '\"')
+                {
+                    OnString = !OnString;
+                }
+
+
+
+
+                if (!OnString)
+                {
+                    if (word == ' ' || word == '	') continue;
+                    if (word == '\n' || word == '\r') continue;
+                }
+
                 builder.Append(word);
 
             }
@@ -628,10 +697,6 @@ namespace TetraProjectEditor
                 if (__index > 0 && __index < code.Length)
                     nextWord = code[__index];
 
-                if (word == ' ' || word == '	')
-                {
-                    continue;
-                }
 
                 if ((lastWord == 'I' || lastWord == 'i') && word == 'f')
                 {
@@ -640,12 +705,7 @@ namespace TetraProjectEditor
                         if(code[__index + 1] == '{')
                             IfIndex++;
                     }
-
-
-                   
                 }
-
-
                 if (word == '}')
                 {
                     _index--;
@@ -672,11 +732,6 @@ namespace TetraProjectEditor
                 }
                 lastChangedNextLine = false;
 
-
-
-
-                if (word == '\n')
-                    continue;
 
                 if (nextWord == '}')
                     lastChangedNextLine = true;
@@ -721,7 +776,7 @@ namespace TetraProjectEditor
                 lastWord = word;
                 if (lastChangedNextLine && IfIndex == 0)
                 {
-                    builder.Append("\r\n");
+                    builder.Append("\n");
    
                 }
             }
@@ -844,12 +899,29 @@ namespace TetraProjectEditor
             path = path.Replace("{game}", path_GameApp);
             path = path.Replace("{packages}", path_UserPackage);
             path = path.Replace("{editor}", EdLib.path_AppData);
-            path = path.Replace("{localgame}", Application.StartupPath.Replace("workshop\\content\\1017410\\1815462892", "common\\Tetra Project\\TetraProject.exe"));
+            if (path.Contains("{localgame}"))
+            {
+                var pos = Application.StartupPath.Replace(@"Workshop\Packages\5e2bb7ebdd3c13006a48498d", "");
+                if(EdLib.HasFile(pos + "Player.log"))
+                {
+                    System.IO.StreamReader s = File.OpenText(pos + "Player-prev.log");
+                    string read = s.ReadLine();
+                    s.Close();
+                    read = read.Replace("\'", "");
+                    read = read.Replace("Mono path[0] = ", "");
+                    read = read.Replace(@"/TetraProject_Data/Managed", "");
+                    path = path.Replace("{localgame}", read);
 
+                }
+                
+            }
+
+            
+            
 
             //path = path.Replace("{localpackages}", "G:\\SteamGames\\steamapps\\workshop\\content\\1017410");
 
-            path = path.Replace("{localpackages}", Application.StartupPath.Replace("1017410\\1815462892", "1017410"));
+            path = path.Replace("{localpackages}", Application.StartupPath.Replace("5e2bb7ebdd3c13006a48498d", ""));
 
             path = path.Replace("\\TetraProject.exe", "");
             return path.Trim();
@@ -904,6 +976,12 @@ namespace TetraProjectEditor
             }
             EdLib.path_FileSelection = GetPath("{game}");
             var pos = GetPath("{localgame}");
+            if (!EdLib.AskMsg("是否默认游戏文件夹为：" + pos))
+            {
+                pos = "";
+            }
+ 
+
             if (EdLib.HasFile(pos, true) && !pos.Contains("Debug"))
             {
                 path_GameApp = GetPath(pos);
@@ -1084,23 +1162,41 @@ namespace TetraProjectEditor
             }
             path_CurrentPackage = pos;
             loadAll();
+            SaveFile();
+            IsCSVLoader = true;
+            loadAll();
+            IsCSVLoader = false;
+
+
+
             foreach (var item in ReoMain.Worksheets)
             {
-                for (int i = 1; i < item.RowCount - 1; i++)
+                for (int i = 1; i < item.RowCount && i < 50; i++)
                 {
-                    for (int d = 0; d < item.ColumnCount; d++)
+                    for (int d = 0; d < item.ColumnCount && d < 1024; d++)
                     {
-                        if(item[i,d] != null )
+                        if (item.Cells[i, d] != null)
                         {
-                            item[i, d] = null;
+                            try
+                            {
+                               // item.Cells[i, d].Style.TextWrap = TextWrapMode.WordBreak;
+                                item.Cells[i, d].Data = null;
+                            }
+                            catch (Exception e)
+                            {
+                                EdLib.AskMsg("ERROR CODE: 101\n"+ e.Message.ToString());
+                            }
                         }
+
+   
                     }
                 }
 
             }
+            // */
             SaveFile();
             EdLib.AskMsg("资源包创建完毕");
-            System.Diagnostics.Process.Start(pos);
+            //System.Diagnostics.Process.Start(pos);
         }
 
 
@@ -1112,19 +1208,24 @@ namespace TetraProjectEditor
             {
                 return path_CurrentPackage;
             }
-
             currentPackageName = frm.indexOfLastSelection < frm.names.Count ? frm.names[frm.indexOfLastSelection] : "";
             return frm.indexOfLastSelection < frm.paths.Count ? frm.paths[frm.indexOfLastSelection] : "";
      
         }
 
+
+        static public int returnTaskIDForOtherWindow = 0;
         private void 更换资源包ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             path_CurrentPackage = PackageSelection();
+            if(returnTaskIDForOtherWindow == 1024)
+            {
+                this.Text = appChineseName + "    " + currentPackageName;
+                SaveUserInfo();
+                loadAll();
+                returnTaskIDForOtherWindow = 0;
+            }
             
-            this.Text = appChineseName + "    " + currentPackageName;
-            SaveUserInfo();
-            loadAll();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -1146,13 +1247,14 @@ namespace TetraProjectEditor
 
                 }
             }
-            mainEditor.ShowLineNumbers = true;
+            if (mainEditor == null) return;
+            //mainEditor.ShowLineNumbers = true;
             HighlightingManager.Instance.RegisterHighlighting("Custom Highlighting", new string[] { ".csscript" }, customHighlighting);
             mainEditor.SyntaxHighlighting = customHighlighting;
             mainEditor.FontSize = 15f;
             var converter = new System.Windows.Media.BrushConverter();
-            var brush = (System.Windows.Media.Brush)converter.ConvertFromString(ColorTranslator.ToHtml(Color.FromArgb(30, 30, 30)));
-            var brush2 = (System.Windows.Media.Brush)converter.ConvertFromString(ColorTranslator.ToHtml(Color.FromArgb(218, 218, 218)));
+            var brush = (System.Windows.Media.Brush)converter.ConvertFromString(ColorTranslator.ToHtml(Color.FromArgb(30, 30, 30))); //Color.FromArgb(218, 218, 218)));
+            var brush2 = (System.Windows.Media.Brush)converter.ConvertFromString(ColorTranslator.ToHtml(Color.FromArgb(218, 218, 218)));//Color.FromArgb(30, 30, 30)));
             mainEditor.Background = brush;
             mainEditor.Foreground = brush2;
             mainEditor.TextArea.TextEntered += textEditor_TextArea_TextEntered;
@@ -1171,12 +1273,23 @@ namespace TetraProjectEditor
         public static string GetClear(string code)
         {
             StringBuilder builder = new StringBuilder();
+            bool OnString = false;
             foreach (char word in code)
             {
                 if (word == '\n' || word == '\r')
                     continue;
-                if (word == ' ' || word == '	')
-                    continue;
+
+                if (word == '\"')
+                {
+                    OnString = !OnString;
+                }
+
+                if (!OnString)
+                {
+                    if (word == ' ' || word == '	')continue;
+                }
+                
+
                 builder.Append(word);
 
             }
@@ -1197,29 +1310,43 @@ namespace TetraProjectEditor
 
 
 
-        public void SaveFile()
+        public void SaveFile(bool isXls = false)
         {
             if (EdLib.HasFile(path_CurrentPackage, true))
             {
-                if (IsCurrentPackageSteamWorkshop)
+                if (!EdLib.CanBeEdited(GetPath(path_CurrentPackage)))
                 {
                     EdLib.AskMsg(loadOnlinePackageWarning);
                 }
                 else
                 {
-                    ReoMain.Save(GetPath(path_CurrentPackage) + "\\Database\\database.xlsx", unvell.ReoGrid.IO.FileFormat.Excel2007);
+                    if(isAsonEdting)
+                    {
+                        if(mainEditor.Text.Length > 2)
+                        {
+                            File.WriteAllText(AsonPath, mainEditor.Text, Encoding.UTF8);
+                        }
+                    }
+                    if(isXls)
+                    {
+                        ReoMain.Save(GetPath(path_CurrentPackage) + "\\Database\\database.xls", unvell.ReoGrid.IO.FileFormat.Excel2007);
+                    }
+                    else
+                    {
+                        ReoMain.Save(GetPath(path_CurrentPackage) + "\\Database\\database.xlsx", unvell.ReoGrid.IO.FileFormat.Excel2007);
+                    }
+                    
                     foreach (var item in ReoMain.Worksheets)
                     {
                         var destPos = GetPath(path_CurrentPackage) + "\\Database\\" + item.Name + ".csv";
-                        item.ExportAsCSV(destPos);
-                        File.WriteAllText(destPos, File.ReadAllText(destPos, Encoding.Default), Encoding.UTF8);
+                        item.ExportAsCSV(destPos, 0, Encoding.UTF8);
                     }
                 }
 
             }
-
-
         }
+
+
 
         private void 保存数据库ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1242,23 +1369,20 @@ namespace TetraProjectEditor
                 {
                     EdLib.AskMsg(loadOnlinePackageWarning);
                 }
-                else
-                {
-                    System.Diagnostics.Process.Start(path_CurrentPackage);
-                }
-                
+                System.Diagnostics.Process.Start(path_CurrentPackage);
+
             }
         }
 
         private void 关于我们ToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
              EdLib.AskMsg(@"程序：Tamill
-联系：1298878474@qq.com
+联系(QQ)：1298878474
 适用游戏： Tetra Project （原石计划） Steam 版
 如有bug 欢迎加群:951022336 汇报。
 如加入 mod 制作队伍，欢迎加群:652279837。 
 
-©2016-2019 Yiyin Tang Studio. All rights reserved.
+©2016-2020 Yiyin Tang. All rights reserved.
 Game Development: Alive Game Studio
 ");
         }
@@ -1319,6 +1443,8 @@ Game Development: Alive Game Studio
         {
 
             reoGridControl3.Hide();
+            
+           
         }
 
         private void 打开CardCommandToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -1352,9 +1478,9 @@ Game Development: Alive Game Studio
 
         private void 以CSV方式重载入ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IsCSVLoader = false;
-            loadAll();
             IsCSVLoader = true;
+            loadAll();
+            IsCSVLoader = false;
         }
 
         private void 常见异常ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1369,6 +1495,59 @@ Game Development: Alive Game Studio
             }
         }
 
+        private void 启动新浏览器窗口ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(Application.ExecutablePath);
+        }
+
+        string AsonPath; //= @"C:\Users\Tamill\Documents\TetraProject\Packages\1795264764\Plot\SCP_EVENTS_1.ason";
+        bool isAsonEdting = false;
+        private void 脚本包模式测试中ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AsonPath = path_CurrentPackage + "\\Plot\\EVENTS.ason";
+            if (EdLib.HasFile(AsonPath))
+            {
+                if(isAsonEdting)
+                {
+                    if (Editing != null && Editing.Data != null)
+                        OptimizeVision(Editing.Data.ToString());
+                    else
+                        mainEditor.Text = "";
+                }
+                else
+                {
+                    OptimizeVision(File.ReadAllText(AsonPath));
+                    
+                }
+                isAsonEdting = !isAsonEdting;
+            }
+            else
+            {
+                EdLib.AskMsg("请将您的需要快速编辑的脚本包修改名称为 \"EVENTS.ason\"\n 位置："+ AsonPath);
+            }
+        }
+
+        private void 刷卡ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var dest = Path.GetTempPath() + "TetraProject";
+            if (EdLib.HasFile(dest, true))
+            {
+                Directory.CreateDirectory(dest);
+            }
+            var msg = String.Format("{0}:'{1}','{2}','{3}'", reoGridControl2.CurrentWorksheet.Name, editingCardId, "description", GetPath(path_CurrentPackage) + "\\Database\\database.xlsx");
+            File.WriteAllText(dest + "/message.txt", msg);
+            System.Diagnostics.Debug.Print("Send Game Message To " + dest + "/message.txt");
+        }
+
+        private void 保存xlsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFile(true);
+        }
+
+        private void ReoGridControl3_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

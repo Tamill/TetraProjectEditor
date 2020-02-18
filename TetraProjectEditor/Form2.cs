@@ -31,14 +31,14 @@ namespace TetraProjectEditor
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            this.ForeColor = EdLib.CFore; this.BackColor = EdLib.CBack;
-            listView1.ForeColor = EdLib.CFore; listView1.BackColor = EdLib.CBack;
-            richTextBox1.ForeColor = EdLib.CFore; richTextBox1.BackColor = EdLib.CBack;
-            button1.ForeColor = EdLib.CFore; button1.BackColor = EdLib.CBack;
-            button2.ForeColor = EdLib.CFore; button2.BackColor = EdLib.CBack;
-            button3.ForeColor = EdLib.CFore; button3.BackColor = EdLib.CBack;
-            button4.ForeColor = EdLib.CFore; button4.BackColor = EdLib.CBack;
-            button5.ForeColor = EdLib.CFore; button5.BackColor = EdLib.CBack;
+            //this.ForeColor = EdLib.CFore; this.BackColor = EdLib.CBack;
+            //listView1.ForeColor = EdLib.CFore; listView1.BackColor = EdLib.CBack;
+            //richTextBox1.ForeColor = EdLib.CFore; richTextBox1.BackColor = EdLib.CBack;
+            //button1.ForeColor = EdLib.CFore; button1.BackColor = EdLib.CBack;
+            //button2.ForeColor = EdLib.CFore; button2.BackColor = EdLib.CBack;
+            //button3.ForeColor = EdLib.CFore; button3.BackColor = EdLib.CBack;
+            //button4.ForeColor = EdLib.CFore; button4.BackColor = EdLib.CBack;
+            //button5.ForeColor = EdLib.CFore; button5.BackColor = EdLib.CBack;
             this.Text = Form1.appChineseName;
             this.Icon = Form1.main.Icon;
             EdLib.SetBrowser(listView1, listView1.Width);
@@ -59,7 +59,7 @@ namespace TetraProjectEditor
         {
             bool IsCurrentPackageSteamWorkshop = false;
             path = Form1.GetPath(path);
-            if (path.Contains("steamapps"))
+            if (!EdLib.CanBeEdited(path))
             {
                 IsCurrentPackageSteamWorkshop = true;
             }
@@ -71,7 +71,7 @@ namespace TetraProjectEditor
                 string mainInfo = oneInfo;
                 string descInfo = "";
                 string IdInfo = "";
-                if (mainInfo == "1815462892")
+                if (mainInfo == "5e2bb7ebdd3c13006a48498d")
                     continue;
                 if (EdLib.HasFile(path + "\\" + mainInfo + "\\PackageInfo.json", false))
                 {
@@ -147,13 +147,14 @@ namespace TetraProjectEditor
 
         private void button2_Click(object sender, EventArgs e)
         {
+            Form1.returnTaskIDForOtherWindow = 1024;
             this.Close();
         }
 
         public string workshopId = "";
         private void button1_Click(object sender, EventArgs e)
         {
-             System.Diagnostics.Process.Start("https://steamcommunity.com/sharedfiles/filedetails/?id=" + workshopId);
+             //System.Diagnostics.Process.Start("https://steamcommunity.com/sharedfiles/filedetails/?id=" + workshopId);
            
             
         }
@@ -198,7 +199,7 @@ namespace TetraProjectEditor
         {
             if(indexOfLastSelection >= 0 && indexOfLastSelection < listView1.Items.Count)
             {
-                if (paths[indexOfLastSelection].Contains("steamapps"))
+                if (!EdLib.CanBeEdited(paths[indexOfLastSelection]))
                 {
                     EdLib.AskMsg(Form1.loadOnlinePackageWarning);
                 }
@@ -227,7 +228,7 @@ namespace TetraProjectEditor
 
             if (indexOfLastSelection >= 0 && indexOfLastSelection < listView1.Items.Count)
             {
-                if (paths[indexOfLastSelection].Contains("steamapps"))
+                if (!EdLib.CanBeEdited(paths[indexOfLastSelection]))
                 {
                     EdLib.AskMsg(Form1.loadOnlinePackageWarning);
                 }

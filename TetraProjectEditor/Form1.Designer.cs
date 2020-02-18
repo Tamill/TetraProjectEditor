@@ -35,11 +35,15 @@
             this.保存数据库ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.以CSV方式重载入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打开资源包文件夹ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.启动新浏览器窗口ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.保存xlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.效率ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.启动游戏ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.回到资源包ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打开CardCommandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.脚本包模式测试中ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.刷卡ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于我们ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.官方教程档案ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,8 +79,10 @@
             this.选择游戏程序ToolStripMenuItem,
             this.更换资源包ToolStripMenuItem,
             this.保存数据库ToolStripMenuItem,
+            this.保存xlsToolStripMenuItem,
             this.以CSV方式重载入ToolStripMenuItem,
-            this.打开资源包文件夹ToolStripMenuItem});
+            this.打开资源包文件夹ToolStripMenuItem,
+            this.启动新浏览器窗口ToolStripMenuItem});
             this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
             this.文件ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.文件ToolStripMenuItem.Text = "文件";
@@ -101,14 +107,14 @@
             this.保存数据库ToolStripMenuItem.Name = "保存数据库ToolStripMenuItem";
             this.保存数据库ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.保存数据库ToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.保存数据库ToolStripMenuItem.Text = "保存数据库";
+            this.保存数据库ToolStripMenuItem.Text = "保存为xlsx";
             this.保存数据库ToolStripMenuItem.Click += new System.EventHandler(this.保存数据库ToolStripMenuItem_Click);
             // 
             // 以CSV方式重载入ToolStripMenuItem
             // 
             this.以CSV方式重载入ToolStripMenuItem.Name = "以CSV方式重载入ToolStripMenuItem";
             this.以CSV方式重载入ToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.以CSV方式重载入ToolStripMenuItem.Text = "以XLS方式重载入";
+            this.以CSV方式重载入ToolStripMenuItem.Text = "以CSV重载入";
             this.以CSV方式重载入ToolStripMenuItem.Click += new System.EventHandler(this.以CSV方式重载入ToolStripMenuItem_Click);
             // 
             // 打开资源包文件夹ToolStripMenuItem
@@ -118,6 +124,20 @@
             this.打开资源包文件夹ToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.打开资源包文件夹ToolStripMenuItem.Text = "打开资源包文件夹";
             this.打开资源包文件夹ToolStripMenuItem.Click += new System.EventHandler(this.打开资源包文件夹ToolStripMenuItem_Click);
+            // 
+            // 启动新浏览器窗口ToolStripMenuItem
+            // 
+            this.启动新浏览器窗口ToolStripMenuItem.Name = "启动新浏览器窗口ToolStripMenuItem";
+            this.启动新浏览器窗口ToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.启动新浏览器窗口ToolStripMenuItem.Text = "启动新浏览器窗口";
+            this.启动新浏览器窗口ToolStripMenuItem.Click += new System.EventHandler(this.启动新浏览器窗口ToolStripMenuItem_Click);
+            // 
+            // 保存xlsToolStripMenuItem
+            // 
+            this.保存xlsToolStripMenuItem.Name = "保存xlsToolStripMenuItem";
+            this.保存xlsToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.保存xlsToolStripMenuItem.Text = "保存为xls";
+            this.保存xlsToolStripMenuItem.Click += new System.EventHandler(this.保存xlsToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 
@@ -136,7 +156,9 @@
             this.效率ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.启动游戏ToolStripMenuItem,
             this.回到资源包ToolStripMenuItem,
-            this.打开CardCommandToolStripMenuItem});
+            this.打开CardCommandToolStripMenuItem,
+            this.脚本包模式测试中ToolStripMenuItem,
+            this.刷卡ToolStripMenuItem});
             this.效率ToolStripMenuItem.Name = "效率ToolStripMenuItem";
             this.效率ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.效率ToolStripMenuItem.Text = "效率";
@@ -145,23 +167,40 @@
             // 
             this.启动游戏ToolStripMenuItem.Name = "启动游戏ToolStripMenuItem";
             this.启动游戏ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.启动游戏ToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.启动游戏ToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
             this.启动游戏ToolStripMenuItem.Text = "启动游戏";
             this.启动游戏ToolStripMenuItem.Click += new System.EventHandler(this.启动游戏ToolStripMenuItem_Click_1);
             // 
             // 回到资源包ToolStripMenuItem
             // 
             this.回到资源包ToolStripMenuItem.Name = "回到资源包ToolStripMenuItem";
-            this.回到资源包ToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.回到资源包ToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
             this.回到资源包ToolStripMenuItem.Text = "回到资源包";
             this.回到资源包ToolStripMenuItem.Click += new System.EventHandler(this.回到资源包ToolStripMenuItem_Click_1);
             // 
             // 打开CardCommandToolStripMenuItem
             // 
             this.打开CardCommandToolStripMenuItem.Name = "打开CardCommandToolStripMenuItem";
-            this.打开CardCommandToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.打开CardCommandToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
             this.打开CardCommandToolStripMenuItem.Text = "打开 CardCommand";
             this.打开CardCommandToolStripMenuItem.Click += new System.EventHandler(this.打开CardCommandToolStripMenuItem_Click_1);
+            // 
+            // 脚本包模式测试中ToolStripMenuItem
+            // 
+            this.脚本包模式测试中ToolStripMenuItem.Name = "脚本包模式测试中ToolStripMenuItem";
+            this.脚本包模式测试中ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D5)));
+            this.脚本包模式测试中ToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
+            this.脚本包模式测试中ToolStripMenuItem.Text = "脚本包模式（测试中)";
+            this.脚本包模式测试中ToolStripMenuItem.Click += new System.EventHandler(this.脚本包模式测试中ToolStripMenuItem_Click);
+            // 
+            // 刷卡ToolStripMenuItem
+            // 
+            this.刷卡ToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.刷卡ToolStripMenuItem.Name = "刷卡ToolStripMenuItem";
+            this.刷卡ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D4)));
+            this.刷卡ToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
+            this.刷卡ToolStripMenuItem.Text = "在游戏中创建所选对象";
+            this.刷卡ToolStripMenuItem.Click += new System.EventHandler(this.刷卡ToolStripMenuItem_Click);
             // 
             // 帮助ToolStripMenuItem
             // 
@@ -354,6 +393,7 @@
             this.reoGridControl3.Size = new System.Drawing.Size(1005, 526);
             this.reoGridControl3.TabIndex = 41;
             this.reoGridControl3.Text = "reoGridControl3";
+            this.reoGridControl3.Click += new System.EventHandler(this.ReoGridControl3_Click_1);
             // 
             // elementHost1
             // 
@@ -447,6 +487,10 @@
         private System.Windows.Forms.ToolStripMenuItem 官方教程档案ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 以CSV方式重载入ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 常见异常ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 启动新浏览器窗口ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 脚本包模式测试中ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 刷卡ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 保存xlsToolStripMenuItem;
     }
 }
 

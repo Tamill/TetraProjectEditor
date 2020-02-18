@@ -3,4 +3,8 @@
   <PropertyGroup>
     <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <StartAction>Project</StartAction>
+    <StartProgram>C:\Users\Tamill\AppData\LocalLow\AliveGameStudio\TetraProject\Workshop\Packages\5e2bb7ebdd3c13006a48498d\TetraProjectEditor.exe</StartProgram>
+  </PropertyGroup>
 </Project>

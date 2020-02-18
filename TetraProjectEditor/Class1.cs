@@ -14,8 +14,8 @@ namespace TetraProjectEditor
 {
     class EdLib
     {
-        static public Color CFore = Color.White;
-        static public Color CBack = Color.FromArgb(255, 30, 30, 30);
+        static public Color CFore = Color.FromArgb(255, 30, 30, 30);
+        static public Color CBack = Color.White;
         static public string appName = "Tetra Project 数据";
         static public string path_AppData = Application.StartupPath + "";
         static public FolderBrowserDialog dialog;
@@ -24,6 +24,12 @@ namespace TetraProjectEditor
         static public System.Xml.XmlNode settingsRoot;
         static public System.Xml.XmlDocument MainSettings;
 
+
+        public static bool CanBeEdited(string path)
+        {
+            return !path.Contains("Workshop") &&  !path.Contains("Builtin");
+
+        }
 
         public static bool AskMsg(object content)
         {
