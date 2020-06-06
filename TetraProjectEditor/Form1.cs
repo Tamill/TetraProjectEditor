@@ -468,7 +468,10 @@ namespace TetraProjectEditor
         public void loadAll()
         {
             var pos2 = GetPath("{game}\\TetraProject_Data\\StreamingAssets\\Packages\\Builtin\\Database\\CardCommand.csv");
-
+            if (!EdLib.HasFile(pos2))
+            {
+                pos2 = EdLib.path_AppData + "\\CardCommand.csv";
+            }
             if (EdLib.HasFile(pos2))
             {
                 
@@ -1128,6 +1131,11 @@ namespace TetraProjectEditor
 
         public void CreateNewPackage()
         {
+            if(!EdLib.HasFile(Form1.GetPath(Form1.path_GameApp) + "\\TetraProject_Data\\StreamingAssets\\Packages\\Builtin\\Database\\Database.xls", false))
+            {
+                EdLib.AskMsg("错误25：丢失官方资源库。\n请检查您的游戏是否已经启用开发版本，只有您启用开发版本后本程序才可以访问Builtin文件夹并拷贝相关数据至您的包，具体教程请见Mod交流群。");
+                return;
+            }
             string infoName = EdLib.InputBox("请输入资源包文件夹名称 （英文）").Trim();
             string infoName2 = EdLib.InputBox("请输入MOD名称").Trim();
             string infoIntro = EdLib.InputBox("请输入MOD简介").Trim();
@@ -1209,8 +1217,13 @@ namespace TetraProjectEditor
                 return path_CurrentPackage;
             }
             currentPackageName = frm.indexOfLastSelection < frm.names.Count ? frm.names[frm.indexOfLastSelection] : "";
-            return frm.indexOfLastSelection < frm.paths.Count ? frm.paths[frm.indexOfLastSelection] : "";
-     
+            var path = frm.indexOfLastSelection < frm.paths.Count ? frm.paths[frm.indexOfLastSelection] : "";
+            if (EdLib.HasFile(path + "\\PackageInfo.json", false))
+            {
+                return path;
+            }
+            EdLib.AskMsg("错误24：无法访问的资源库。\n如果无法打开官方资源库，请检查您的游戏是否已经启用开发版本。");
+            return path_CurrentPackage;
         }
 
 
@@ -1452,13 +1465,14 @@ Game Development: Alive Game Studio
            
             var pos2 = GetPath("{game}\\TetraProject_Data\\StreamingAssets\\Packages\\Builtin\\Database\\CardCommand.csv");
 
-            if (EdLib.HasFile(pos2))
+            if (!EdLib.HasFile(pos2))
             {
-               reoGridControl3.Load(pos2, unvell.ReoGrid.IO.FileFormat.CSV);
-                var sheet = reoGridControl3.CurrentWorksheet;
-                sheet.SetColumnsWidth(0, 2, 200);
-                reoGridControl3.Show();
+              pos2 = EdLib.path_AppData + "\\CardCommand.csv"; 
             }
+            reoGridControl3.Load(pos2, unvell.ReoGrid.IO.FileFormat.CSV);
+            var sheet = reoGridControl3.CurrentWorksheet;
+            sheet.SetColumnsWidth(0, 2, 200);
+            reoGridControl3.Show();
         }
 
         private void reoGridControl3_Click(object sender, EventArgs e)
@@ -1530,11 +1544,12 @@ Game Development: Alive Game Studio
         private void 刷卡ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var dest = Path.GetTempPath() + "TetraProject";
-            if (EdLib.HasFile(dest, true))
+            if (!EdLib.HasFile(dest, true))
             {
                 Directory.CreateDirectory(dest);
             }
             var msg = String.Format("{0}:'{1}','{2}','{3}'", reoGridControl2.CurrentWorksheet.Name, editingCardId, "description", GetPath(path_CurrentPackage) + "\\Database\\database.xlsx");
+
             File.WriteAllText(dest + "/message.txt", msg);
             System.Diagnostics.Debug.Print("Send Game Message To " + dest + "/message.txt");
         }

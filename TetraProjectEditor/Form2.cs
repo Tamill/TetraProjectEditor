@@ -147,7 +147,9 @@ namespace TetraProjectEditor
 
         private void button2_Click(object sender, EventArgs e)
         {
+
             Form1.returnTaskIDForOtherWindow = 1024;
+  
             this.Close();
         }
 
